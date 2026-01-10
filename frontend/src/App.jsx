@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { analyzeVideos } from './services/api';
-import ResultCard from './components/ResultCard';
+import VideoCard from './components/VideoCard';
+import MetricExplanation from './components/MetricExplanation';
+import DeepAnalysis from './components/DeepAnalysis';
 import LoadingSpinner from './components/LoadingSpinner';
 import './App.css';
 
@@ -11,7 +13,6 @@ const createUrlEntry = (value = '') => ({
 });
 
 function App() {
-  // Use objects with unique IDs instead of plain strings
   const [urls, setUrls] = useState([
     createUrlEntry(),
     createUrlEntry(),
@@ -42,7 +43,6 @@ function App() {
   };
 
   const handleAnalyze = async () => {
-    // Filter out empty URLs and extract values
     const validUrls = urls
       .map(urlObj => urlObj.value.trim())
       .filter(url => url !== '');
@@ -67,7 +67,7 @@ function App() {
   };
 
   const isValidYoutubeUrl = (url) => {
-    if (!url) return true; // Empty is okay
+    if (!url) return true;
     return url.includes('youtube.com/watch') || url.includes('youtu.be/');
   };
 
@@ -82,6 +82,7 @@ function App() {
       </header>
 
       <main className="main">
+        {/* URL Input Section */}
         <section className="input-section">
           <h2>Enter YouTube URLs</h2>
           <p className="input-hint">Add 1-5 YouTube video URLs to compare</p>
@@ -130,23 +131,34 @@ function App() {
           )}
         </section>
 
+        {/* Loading State */}
         {loading && <LoadingSpinner />}
 
+        {/* Results Section */}
         {results && (
-          <section className="results-section">
-            <h2>Analysis Results</h2>
-            <p className="results-summary">{results.summary}</p>
+          <>
+            <section className="results-section">
+              <h2>Results</h2>
+              <p className="results-summary">{results.summary}</p>
 
-            <div className="results-grid">
-              {results.videos.map((video) => (
-                <ResultCard
-                  key={video.youtube_id}
-                  video={video}
-                  rank={video.overall_rank}
-                />
-              ))}
-            </div>
-          </section>
+              {/* Video Cards Grid */}
+              <div className="video-grid">
+                {results.videos.map((video) => (
+                  <VideoCard
+                    key={video.youtube_id}
+                    video={video}
+                    rank={video.overall_rank}
+                  />
+                ))}
+              </div>
+            </section>
+
+            {/* Metric Explanation Panel */}
+            <MetricExplanation />
+
+            {/* Deep Analysis Section */}
+            <DeepAnalysis videos={results.videos} />
+          </>
         )}
       </main>
 
