@@ -62,19 +62,6 @@ class OriginalityAgent(BaseAgent):
         Returns:
             Dict mapping video_id to originality results
         """
-        if len(videos) < 2:
-            logger.warning("Originality analysis requires at least 2 videos")
-            # Return default scores for single video
-            if videos:
-                return {
-                    videos[0]["video_id"]: {
-                        "score": 70,
-                        "unique_aspects": ["Only video in comparison"],
-                        "common_with_others": [],
-                        "raw_llm_response": {},
-                    }
-                }
-            return {}
         
         logger.info(f"Analyzing originality across {len(videos)} videos...")
         

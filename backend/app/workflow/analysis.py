@@ -201,16 +201,20 @@ async def originality_node(state: WorkflowState) -> WorkflowState:
     ]
     
     # Run with retry
-    originality_results = await with_retry(
-        originality_agent.analyze,
-        videos=originality_input,
-    )
+    try:
+        originality_results = await with_retry(
+            originality_agent.analyze,
+            videos=originality_input,
+        )
+    except Exception as e:
+        logger.error(f"Originality analysis failed: {e}")
+        originality_results = {}
     
     # Attach originality results to each video
     for result in video_results:
         video_id = result["video"].youtube_id
         result["originality"] = originality_results.get(video_id, {
-            "score": 50,
+            "score": 0,
             "unique_aspects": [],
             "common_with_others": [],
         })
