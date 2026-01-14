@@ -59,6 +59,66 @@ class YouTubeService:
                 return match.group(1)
         return None
     
+    async def validate_video_exists(self, url: str) -> tuple[bool, str, Optional[str]]:
+        """
+        Quick validation that a video exists (no transcript fetch).
+        Uses YouTube oEmbed API - fast and doesn't require API key.
+        
+        Args:
+            url: YouTube URL to validate
+            
+        Returns:
+            Tuple of (is_valid, url, error_message or None)
+        """
+        video_id = self.extract_video_id(url)
+        if not video_id:
+            return False, url, "Invalid YouTube URL format"
+        
+        # Use oEmbed API for quick validation
+        oembed_url = f"https://www.youtube.com/oembed?url=https://youtube.com/watch?v={video_id}&format=json"
+        
+        try:
+            async with httpx.AsyncClient(timeout=5.0) as client:
+                response = await client.get(oembed_url)
+                if response.status_code == 200:
+                    return True, url, None
+                elif response.status_code == 404:
+                    return False, url, "Video not found"
+                else:
+                    return False, url, f"YouTube returned status {response.status_code}"
+        except httpx.TimeoutException:
+            return False, url, "Timeout checking video"
+        except Exception as e:
+            return False, url, f"Error validating video: {str(e)}"
+    
+    async def validate_all_urls(self, urls: List[str]) -> tuple[bool, List[str]]:
+        """
+        Validate all URLs in parallel before processing.
+        
+        Args:
+            urls: List of YouTube URLs to validate
+            
+        Returns:
+            Tuple of (all_valid, list of error messages)
+        """
+        import asyncio
+        
+        logger.info(f"Validating {len(urls)} URLs...")
+        tasks = [self.validate_video_exists(url) for url in urls]
+        results = await asyncio.gather(*tasks)
+        
+        errors = []
+        for is_valid, url, error_msg in results:
+            if not is_valid:
+                errors.append(f"{url}: {error_msg}")
+        
+        if errors:
+            logger.warning(f"URL validation failed: {errors}")
+            return False, errors
+        
+        logger.info("All URLs validated successfully")
+        return True, []
+    
     async def get_transcript_with_duration(self, video_id: str) -> Tuple[Optional[str], int]:
         """
         Fetch transcript for a YouTube video along with duration.
@@ -130,7 +190,7 @@ class YouTubeService:
                 
         except Exception as e:
             logger.error(f"Error fetching metadata for {video_id}: {e}")
-            return None
+            raise e
     
     async def get_video_data(self, url: str) -> Optional[VideoData]:
         """

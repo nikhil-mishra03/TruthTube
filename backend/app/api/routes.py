@@ -54,6 +54,16 @@ async def analyze_videos(request: AnalyzeRequest):
     logger.info(f"Starting analysis session {session_id} with {len(request.urls)} URLs")
     
     try:
+        # Step 0: Validate all URLs first (fast, parallel - prevents wasted LLM calls)
+        logger.info("Validating URLs...")
+        all_valid, validation_errors = await youtube_service.validate_all_urls(request.urls)
+        
+        if not all_valid:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid video URLs: {validation_errors}"
+            )
+        
         # Step 1: Fetch video data (metadata + transcripts)
         logger.info("Fetching video data...")
         video_data_list = await youtube_service.get_multiple_video_data(request.urls)
