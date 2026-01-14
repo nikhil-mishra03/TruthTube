@@ -108,23 +108,28 @@ async def analyze_single_video(video: VideoData) -> Dict[str, Any]:
     )
     
     # Handle any exceptions
+    failed_agents = []
     if isinstance(density_result, Exception):
         logger.error(f"Density failed: {density_result}")
-        density_result = {"score": 50, "facts_count": 0, "insights_per_minute": 0, "key_facts": [], "summary": ""}
+        density_result = {"score": 0, "facts_count": 0, "insights_per_minute": 0, "key_facts": [], "summary": ""}
+        failed_agents.append("density")
     
     if isinstance(redundancy_result, Exception):
         logger.error(f"Redundancy failed: {redundancy_result}")
-        redundancy_result = {"score": 25, "filler_percentage": 10, "repetition_percentage": 15, "examples": []}
+        redundancy_result = {"score": 0, "filler_percentage": 10, "repetition_percentage": 15, "examples": []}
+        failed_agents.append("redundancy")
     
     if isinstance(title_result, Exception):
         logger.error(f"Title failed: {title_result}")
-        title_result = {"score": 75, "is_clickbait": False, "explanation": "Analysis failed"}
+        title_result = {"score": 0, "is_clickbait": False, "explanation": "Analysis failed"}
+        failed_agents.append("title")
     
     return {
         "video": video,
         "density": density_result,
         "redundancy": redundancy_result,
         "title": title_result,
+        "failed_agents": failed_agents,
     }
 
 
@@ -146,7 +151,11 @@ async def analyze_videos_node(state: WorkflowState) -> WorkflowState:
     for i, result in enumerate(results):
         if isinstance(result, Exception):
             errors.append(f"Video {i} analysis failed: {result}")
-            logger.error(f"Video analysis failed: {result}")
+            logger.error(f"Video {i} analysis failed: {result}")
+        elif len(result["failed_agents"]) > 0:
+            errors.append(f"Video {i} partial failure: {result['failed_agents']}")
+            logger.warning(f"Video {i} partial failure: {result['failed_agents']}")
+            video_results.append(result)
         else:
             video_results.append(result)
     
