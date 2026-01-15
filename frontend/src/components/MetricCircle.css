@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  position: relative;
 }
 
 .circle-svg {
@@ -21,7 +22,8 @@
   fill: none;
   stroke-width: 6;
   stroke-linecap: round;
-  transition: stroke-dashoffset 0.5s ease-out;
+  /* Smooth animation for the fill */
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .circle-progress.good {
@@ -40,35 +42,70 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.metric-circle {
-  position: relative;
+  transform: translate(-50%, calc(-50% - 0.5rem));
 }
 
 .circle-value {
   font-size: 1.25rem;
   font-weight: 700;
   color: #fff;
+  /* Subtle text shadow for depth */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .circle-label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  text-align: center;
 }
 
-/* Color themes - for visual distinction */
-.metric-circle.density .circle-progress.good { stroke: #8b5cf6; }
-.metric-circle.density .circle-progress.medium { stroke: #a78bfa; }
+/* Color themes - unique colors per metric */
+.metric-circle.density .circle-progress.good {
+  stroke: #8b5cf6;
+}
 
-.metric-circle.redundancy .circle-progress.good { stroke: #22c55e; }
-.metric-circle.redundancy .circle-progress.medium { stroke: #f59e0b; }
+.metric-circle.density .circle-progress.medium {
+  stroke: #a78bfa;
+}
 
-.metric-circle.title .circle-progress.good { stroke: #06b6d4; }
-.metric-circle.title .circle-progress.medium { stroke: #67e8f9; }
+.metric-circle.density .circle-progress.poor {
+  stroke: #c4b5fd;
+}
 
-.metric-circle.originality .circle-progress.good { stroke: #ec4899; }
-.metric-circle.originality .circle-progress.medium { stroke: #f472b6; }
+.metric-circle.redundancy .circle-progress.good {
+  stroke: #22c55e;
+}
+
+.metric-circle.redundancy .circle-progress.medium {
+  stroke: #f59e0b;
+}
+
+.metric-circle.redundancy .circle-progress.poor {
+  stroke: #ef4444;
+}
+
+.metric-circle.title .circle-progress.good {
+  stroke: #06b6d4;
+}
+
+.metric-circle.title .circle-progress.medium {
+  stroke: #67e8f9;
+}
+
+.metric-circle.title .circle-progress.poor {
+  stroke: #a5f3fc;
+}
+
+.metric-circle.originality .circle-progress.good {
+  stroke: #ec4899;
+}
+
+.metric-circle.originality .circle-progress.medium {
+  stroke: #f472b6;
+}
+
+.metric-circle.originality .circle-progress.poor {
+  stroke: #f9a8d4;
+}

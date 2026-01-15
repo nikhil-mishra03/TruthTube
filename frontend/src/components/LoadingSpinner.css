@@ -3,22 +3,29 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 4rem 2rem;
+    padding: 3rem 2rem;
     gap: 1.5rem;
+}
+
+.loading-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
 .spinner {
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
 }
 
 .spinner-ring {
     position: absolute;
     inset: 0;
-    border-radius: 50%;
     border: 3px solid transparent;
-    animation: spin 1.5s linear infinite;
+    border-radius: 50%;
+    animation: spin 1.5s ease-in-out infinite;
 }
 
 .spinner-ring:nth-child(1) {
@@ -47,14 +54,80 @@
 }
 
 .loading-message {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
+    font-weight: 600;
     color: #fff;
-    font-weight: 500;
     margin: 0;
 }
 
-.loading-hint {
+.steps-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 320px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    opacity: 0.4;
+    transition: all 0.3s ease;
+}
+
+.step.active {
+    opacity: 1;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.step.completed {
+    opacity: 0.7;
+}
+
+.step-icon {
+    font-size: 1rem;
+}
+
+.step-text {
+    flex: 1;
     font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.step.active .step-text {
+    color: #fff;
+    font-weight: 500;
+}
+
+.step-check {
+    color: #22c55e;
+    font-weight: 700;
+}
+
+.step-dots {
+    color: #8b5cf6;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+.loading-hint {
+    font-size: 0.8125rem;
     color: rgba(255, 255, 255, 0.5);
     margin: 0;
 }

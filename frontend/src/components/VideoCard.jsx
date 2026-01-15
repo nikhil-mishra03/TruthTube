@@ -4,7 +4,7 @@ import './VideoCard.css';
 /**
  * Compact video card for results grid (horizontal layout)
  */
-export default function VideoCard({ video, rank, onClick }) {
+export default function VideoCard({ video, rank, onClick, animationDelay = 0 }) {
     const getRankBadge = () => {
         if (rank === 1) return { emoji: '🏆', text: '#1', class: 'gold' };
         if (rank === 2) return { emoji: '👍', text: '#2', class: 'silver' };
@@ -27,7 +27,11 @@ export default function VideoCard({ video, rank, onClick }) {
     };
 
     return (
-        <div className={`video-card ${badge.class}`} onClick={onClick}>
+        <div
+            className={`video-card ${badge.class}`}
+            onClick={onClick}
+            style={{ animationDelay: `${animationDelay}ms` }}
+        >
             <div className="card-header">
                 <div className="thumbnail-container">
                     <img

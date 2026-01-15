@@ -35,10 +35,11 @@ body {
    App Layout
    ============================================ */
 
-.app {
+.analyze-page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: #0a0a0f;
 }
 
 /* ============================================
@@ -49,6 +50,10 @@ body {
   text-align: center;
   padding: 3rem 1rem 2rem;
   background: linear-gradient(to bottom, rgba(139, 92, 246, 0.1), transparent);
+}
+
+.logo-link {
+  text-decoration: none;
 }
 
 .logo {
@@ -62,6 +67,11 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  transition: opacity 0.2s;
+}
+
+.logo-link:hover .logo {
+  opacity: 0.9;
 }
 
 .logo-icon {
