@@ -35,6 +35,92 @@
 }
 
 /* ============================================
+   Header/Navigation
+   ============================================ */
+
+.landing-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(10, 10, 15, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+.logo-icon {
+    font-size: 1.75rem;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #a78bfa, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.3s;
+    padding: 0.5rem;
+}
+
+.nav-link:hover {
+    color: #fff;
+}
+
+.btn-header-cta {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn-header-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+}
+
+/* ============================================
    Hero Section
    ============================================ */
 
@@ -44,7 +130,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 4rem 2rem;
+    padding: 6rem 2rem 4rem;
     text-align: center;
 }
 
@@ -94,7 +180,7 @@
 
 .hero-description {
     font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.75);
+    color: rgb(255, 255, 255);
     line-height: 1.7;
     margin: 0 0 2.5rem;
     font-weight: 500;
@@ -331,19 +417,22 @@
 
 .steps-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    max-width: 700px;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    gap: 1.5rem;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
 .step {
-    width: 100%;
+    flex: 1;
+    max-width: 300px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 2rem;
-    padding: 2rem 2.5rem;
+    gap: 1rem;
+    padding: 2rem 1.5rem;
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -351,7 +440,7 @@
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
-    text-align: left;
+    text-align: center;
 }
 
 .step::before {
@@ -368,7 +457,7 @@
 }
 
 .step:hover {
-    transform: translateX(8px);
+    transform: translateY(-8px);
     border-color: rgba(139, 92, 246, 0.3);
     box-shadow:
         0 25px 50px rgba(0, 0, 0, 0.3),
@@ -428,18 +517,19 @@
 
 .step p {
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.65);
+    color: #fff;
     line-height: 1.6;
     margin: 0;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .step-connector {
     display: flex;
+    align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
-    color: rgba(139, 92, 246, 0.6);
-    padding: 0.25rem 0;
+    font-size: 2rem;
+    color: rgba(139, 92, 246, 0.8);
+    flex-shrink: 0;
 }
 
 /* ============================================
@@ -569,7 +659,7 @@
 
 .feature-card p {
     font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.85);
     line-height: 1.65;
     margin: 0;
     font-weight: 500;
@@ -628,7 +718,7 @@
 
 .cta p {
     font-size: 1.35rem;
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.85);
     margin: 0 0 2.5rem;
     font-weight: 500;
 }
@@ -638,12 +728,112 @@
    ============================================ */
 
 .landing-footer {
-    padding: 2.5rem 2rem;
-    text-align: center;
+    padding: 4rem 2rem 2rem;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(0, 0, 0, 0.3);
 }
 
-.landing-footer p {
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.footer-brand {
+    max-width: 300px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.footer-logo .logo-icon {
+    font-size: 1.5rem;
+}
+
+.footer-logo .logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #a78bfa, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.footer-tagline {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.footer-links h4,
+.footer-social h4 {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 1.25rem;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.footer-link {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-align: left;
+    padding: 0;
+    transition: color 0.3s;
+}
+
+.footer-link:hover {
+    color: #a78bfa;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    font-size: 1.25rem;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.social-icon:hover {
+    background: rgba(139, 92, 246, 0.2);
+    border-color: rgba(139, 92, 246, 0.4);
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    padding-top: 2rem;
+    text-align: center;
+}
+
+.footer-bottom p {
     margin: 0;
     color: rgba(255, 255, 255, 0.4);
     font-size: 0.875rem;
@@ -677,16 +867,6 @@
         animation: none;
     }
 
-    .step {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
-    }
-
-    .step-icon {
-        margin: 0 auto;
-    }
-
     .section-title {
         font-size: 2rem;
     }
@@ -697,5 +877,47 @@
 
     .cta h2 {
         font-size: 2rem;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .footer-brand {
+        max-width: 100%;
+    }
+
+    .footer-logo {
+        justify-content: center;
+    }
+
+    .footer-links {
+        align-items: center;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .steps-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .step-connector {
+        transform: rotate(90deg);
     }
 }

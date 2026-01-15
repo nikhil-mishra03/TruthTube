@@ -10,6 +10,27 @@ export default function LandingPage() {
 
     return (
         <div className="landing-page">
+            {/* Header/Navigation */}
+            <header className="landing-header">
+                <div className="header-container">
+                    <div className="logo" onClick={() => navigate('/')}>
+                        <span className="logo-icon">📺</span>
+                        <span className="logo-text">TruthTube</span>
+                    </div>
+                    <nav className="nav-links">
+                        <button className="nav-link" onClick={() => scrollToSection('how-it-works')}>
+                            How It Works
+                        </button>
+                        <button className="nav-link" onClick={() => scrollToSection('features')}>
+                            Features
+                        </button>
+                    </nav>
+                    <button className="btn-header-cta" onClick={() => navigate('/analyze')}>
+                        Try It Now
+                    </button>
+                </div>
+            </header>
+
             {/* Hero Section */}
             <section className="hero">
                 <div className="hero-content">
@@ -78,13 +99,13 @@ export default function LandingPage() {
                         <h3>1. Paste URLs</h3>
                         <p>Simply paste multiple YouTube video URLs that you want to compare</p>
                     </div>
-                    <div className="step-connector">↓</div>
+                    <div className="step-connector">→</div>
                     <div className="step">
                         <div className="step-icon">🤖</div>
                         <h3>2. AI Analyzes</h3>
                         <p>Our AI evaluates content density, redundancy, and originality</p>
                     </div>
-                    <div className="step-connector">↓</div>
+                    <div className="step-connector">→</div>
                     <div className="step">
                         <div className="step-icon">🏆</div>
                         <h3>3. Get Rankings</h3>
@@ -94,7 +115,7 @@ export default function LandingPage() {
             </section>
 
             {/* Features Section */}
-            <section className="features">
+            <section id="features" className="features">
                 <h2 className="section-title">What We Analyze</h2>
                 <div className="features-grid">
                     <div className="feature-card">
@@ -149,7 +170,32 @@ export default function LandingPage() {
 
             {/* Footer */}
             <footer className="landing-footer">
-                <p>Powered by AI • TruthTube 2024</p>
+                <div className="footer-container">
+                    <div className="footer-brand">
+                        <div className="footer-logo">
+                            <span className="logo-icon">📺</span>
+                            <span className="logo-text">TruthTube</span>
+                        </div>
+                        <p className="footer-tagline">AI-powered video analysis to save your time.</p>
+                    </div>
+                    <div className="footer-links">
+                        <h4>Quick Links</h4>
+                        <button className="footer-link" onClick={() => scrollToSection('how-it-works')}>How It Works</button>
+                        <button className="footer-link" onClick={() => scrollToSection('features')}>Features</button>
+                        <button className="footer-link" onClick={() => navigate('/analyze')}>Start Analyzing</button>
+                    </div>
+                    <div className="footer-social">
+                        <h4>Connect</h4>
+                        <div className="social-icons">
+                            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="social-icon">🐙</a>
+                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-icon">🐦</a>
+                            <a href="mailto:hello@truthtube.ai" className="social-icon">✉️</a>
+                        </div>
+                    </div>
+                </div>
+                <div className="footer-bottom">
+                    <p>© 2024 TruthTube. Built with ❤️ and AI.</p>
+                </div>
             </footer>
         </div>
     );
